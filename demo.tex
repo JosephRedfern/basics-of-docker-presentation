@@ -1,0 +1,117 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usemintedstyle{manni}
+
+\setminted{fontsize=\small,baselinestretch=1}%,bgcolor=LightGray}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+
+\title{Packaging Software with Docker}
+\date{\today}
+\author{Joseph Redfern}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[fragile]{The Problem}
+	\vfill Software is fast moving. 
+
+	\vfill Scripts or tools that worked 2--3 years ago (or less) may not work now due to changes to the system running the software.
+
+	\vfill Software X may require library version A, software Y may require library version B.
+
+	\vfill Breakages can be called by operating system upgrades, updates to dependencies.
+
+\end{frame}
+
+\begin{frame}[fragile]{The Problem (cont.)}
+	\vfill Some ecosystems try to solve this problem with virtual environments:
+
+	\vfill \begin{itemize}
+	\item \verb|pip| and \verb|requirements.txt| 
+	\item \verb|anaconda| and \verb|environment.yml|
+	\item Tools like \verb|npm|/\verb|nvm| for node.js packages/version, \verb|gem|/\verb|rvm| for ruby packages/versions
+	\end{itemize}
+
+	\vfill These solutions solve some (but not all) of these issues.
+
+	System library requirements can be issue, even down to things like version of \verb|glibc|.
+
+	Often require the end user be familiar with the ecosystem, not necessarily the case.
+\end{frame}
+
+\begin{frame}[fragile]{What is docker?}
+	\vfill Builds on standard features from Linux kernel, like \verb|cgroups|, \verb|netfilter|, \verb|namespaces|.
+
+	\vfill Provides a set of tools that allows developers to package and distribute software as stand-alone containers.
+
+	\vfill A container is \textit{like} a lightweight virtual machine -- boot time can be in milliseconds.
+
+	\vfill \textbf{However}, shares Kernel of host machine (unlike more traditional virtualisation), but not userspace.
+
+\end{frame}
+
+\begin{frame}[fragile]{What is docker? (cont.)}
+	
+	\vfill A container has its own filesystem, but you can map directories from the host to the container if desired.
+
+	\vfill Registry of base ``images'' on which to build -- these images typically the userspace (libraries/system utilities) of existing operating systems, or preconfigured environments for existing software packages.
+
+	\vfill Docker (the company) provide an image registry (docker hub). University's GitLab install also features Docker registry.
+\end{frame}
+
+\begin{frame}[fragile]{Example usage}
+
+	\vfill To distribute software through Docker, we need to create an image.
+	\vfill To create an image, we need to write a \verb|Dockerfile|.
+	\vfill The \verb|Dockerfile| contains the commands needed to assemble our image.
+	\vfill Includes reference to parent container, defines working directory, copies files and resources from build machine to container, runs commands in the container before being snapshotted.
+	\vfill Also defines commands to be run when container starts.
+\end{frame}
+
+\begin{frame}[fragile]{Example Dockerfile}
+	\inputminted{Dockerfile}{example/Dockerfile}
+\end{frame}
+
+\begin{frame}[fragile]{Building an image}
+	\vfill Once we've defined our \verb|Dockerfile|, we need to build the image.
+	\vfill Use the command: \verb|docker build . -t name:version|.
+	\vfill The \verb|-t| arg lets us tag the image with a name \& version -- for instance, \verb|-t awesomesoft:1.3.37|.
+\end{frame}
+
+\begin{frame}[fragile]{Demo}
+
+\vfill <fragile demo goes here>\vfill
+
+\end{frame}
+
+\begin{frame}[fragile]{Parting comments}
+\vfill Docker makes it easy to distribute functional software, minimising barrier to entry. Helpful for reproducible research.
+
+\vfill Containers can be really lightweight. Minimal performance hit, very little overhead. 
+
+\vfill \textbf{Some} security benefits -- can limit access to filesystem, restrict network access, limit memory/CPU usage. (not without pitfalls) 
+
+\vfill Can use cuda within docker using \verb|nvidia-docker|.
+
+\vfill Possible to pass USB devices to docker containers with \verb|--device| flag.
+
+\vfill Compatible with Windows and macOS (through virtualisation).
+
+\end{frame}
+
+\end{document}
