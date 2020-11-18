@@ -54,7 +54,7 @@
 	Often require the end user be familiar with the ecosystem, not necessarily the case.
 \end{frame}
 
-\begin{frame}[fragile]{What is docker?}
+\begin{frame}[fragile]{What is Docker?}
 	\vfill Builds on standard features from Linux kernel, like \verb|cgroups|, \verb|netfilter|, \verb|namespaces|.
 
 	\vfill Provides a set of tools that allows developers to package and distribute software as stand-alone containers.
@@ -65,13 +65,13 @@
 
 \end{frame}
 
-\begin{frame}[fragile]{What is docker? (cont.)}
+\begin{frame}[fragile]{What is Docker? (cont.)}
 	
 	\vfill A container has its own filesystem, but you can map directories from the host to the container if desired.
 
 	\vfill Registry of base ``images'' on which to build -- these images typically the userspace (libraries/system utilities) of existing operating systems, or preconfigured environments for existing software packages.
 
-	\vfill Docker (the company) provide an image registry (docker hub). University's GitLab install also features Docker registry.
+	\vfill Docker (the company) provide an image registry (Docker hub). University's GitLab install also features Docker registry.
 \end{frame}
 
 \begin{frame}[fragile]{Example usage}
@@ -95,7 +95,7 @@
 
 \begin{frame}[fragile]{Demo}
 
-\vfill <fragile demo goes here>\vfill
+\vfill <demo goes here>\vfill
 
 \end{frame}
 
@@ -106,11 +106,13 @@
 
 \vfill \textbf{Some} security benefits -- can limit access to filesystem, restrict network access, limit memory/CPU usage. (not without pitfalls) 
 
-\vfill Can use cuda within docker using \verb|nvidia-docker|.
+\vfill Can use cuda within Docker using \verb|nvidia-docker|.
 
-\vfill Possible to pass USB devices to docker containers with \verb|--device| flag.
+\vfill Possible to pass USB devices to Docker containers with \verb|--device| flag.
 
 \vfill Compatible with Windows and macOS (through virtualisation).
+
+\vfill Extremely popular in industry (cloud hosting providers support it, platforms like Kubernetes)
 
 \end{frame}
 
